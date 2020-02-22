@@ -1,5 +1,8 @@
+//C++面试宝典: https://wenku.baidu.com/view/92e0e923dd36a32d73758164.html
 //1.语法头文件
-1. max函数头文件： #include<algorithm> 2. 包含所有C++ 头文件：
+//1.max函数头文件:
+#include<algorithm> 
+//2. 包含所有C++ 头文件:
 #include <bits/stdc++.h>
 #include <iostream>
 #include <cstdio>
@@ -14,7 +17,8 @@
 #include <map>
 #include <stack>
 #include <set>
-3.输入 : while (cin >> n)
+//3.输入:
+while (cin >> n)
 getline(cin, str) //带空格的字符串
 #include <string.h> 是cstring
 #include <string>   是C++里的string容器的头文件
@@ -44,9 +48,11 @@ fun(Node *&p)
 3. v.push_back() 
 4. v.pop_back() 
 5. 
-求最大值 int max = *max_element(v.begin(), v.end()) 最大值的下标 index1 = max_element(v.begin(), v.end()) - v.begin()
-求最小值 int min = *min_element(v.begin(), v.end()) 最大值的下标 index2 = min_element(v.begin(), v.end()) - v.begin() 
-6. v排序 sort(v.begin(), v.end())
+int max = *max_element(v.begin(), v.end()) 最大值的下标 index1 = max_element(v.begin(), v.end()) - v.begin()
+int min = *min_element(v.begin(), v.end()) 最大值的下标 index2 = min_element(v.begin(), v.end()) - v.begin() 
+6. v排序 
+sort(v.begin(), v.end(),less<int>())//从小到大(默认)
+sort(v.begin(),v.end(),greater<int>())//从大到小
 class D                                                                                                                                                                                                                                                                    自定义排序算法 : class D
 {
 public:
@@ -67,9 +73,8 @@ bool judge(D d1, D d2) //reverse judge 函数
 }
 sort(v.begin(), v.end(), judge);
 
-7.倒置容器 reverse(v.begin(),v.end())
-
-8.
+//7.倒置容器 reverse(v.begin(),v.end())
+//8.遍历容器
 vector<int>::iterator iter;
 for(iter=v.begin();iter!=v.end();iter++)
     cout<<*iter<<endl;
@@ -99,11 +104,15 @@ q.pop()
      输出现有元素的个数 M.size()
 
 4.优先级队列 priority_queue<int> Q
-5. map : 红黑树的实现 ：1.自动排序 2.同样的值合并
+
+5. 
+map :          1.有序 2.树状结构
+unordered_map: 1.无序 2.Hash表
 #include <map>
- 插入 : mapStudent.insert(pair<int, string>(3, "student_three"));
-查找 : if (mymap.find(key) == mymap.end())
-           cout<< "没有这个key"<< endl;
+插入 : mapStudent.insert(pair<int, string>(3, "student_three"))
+查找 : if (mymap.find(k) == mymap.end())
+           cout<< "没有这个key"<< endl
+删除 :mapStudent.erase(m.begin()+i)
 
 //数据的插入--第一种：用insert函数插入pair数据
 #include <map>
@@ -121,7 +130,27 @@ int main()
         cout << iter->first << ' ' << iter->second << endl;
 }
 
-6. C++ 结构体 struct ListNode
+6.set 集合 : 计数 去重 
+int mian()
+{
+    set<int> s;            //树状结构，有序
+    unordered_set<int> s2; //哈希结构，无序，快
+    s.insert(3);
+    s.insert(4);
+    s.insert(4);
+    s.insert(4);
+    cout << s.size() << endl;
+    for (auto tmp : s)
+        cout << tmp << " ";
+    cout << endl;
+    for (auto it = s.begin(); it != s.end(); it++)
+        cout << *it << " ";
+    cout << endl;
+}
+//stl算法:.find()返回迭代器 .count()返回个数
+
+7. C++ 结构体 
+struct ListNode
 {
     int val;
     ListNode *next;
@@ -129,9 +158,6 @@ int main()
 };
 ListNode *temp = (ListNode *)malloc(sizeof(ListNode));
 ListNode *temp = (ListNode *)new ListNode();
-
-7.max min 函数
-#include <algorithm>
 
 8.随机函数
     取得[a,b]的随机整数：rand()%(b-a+1)+a；
@@ -152,8 +178,6 @@ ListNode *temp = (ListNode *)new ListNode();
 11.//数组传参
 void fun(int v[])//可以改变原来的数组的值
 void fun(int v[][4]);
-
-
 
 /*****************************************************************************************************************************/
 
@@ -386,7 +410,7 @@ else return (NULL);
 ;
 
 //7.链表排序 注意是 vector<ListNode*> 重新建立链表
-bool judge(ListNode *&n1, ListNode *&n2) //小于号放入vector函数进行排序
+bool judge_fun(ListNode *&n1, ListNode *&n2) //小于号放入vector函数进行排序
 {
     if (n1->val < n2->val) //升序是小于号
     {
@@ -409,7 +433,7 @@ public:
             v.push_back(p);
             p = p->next;
         }
-        sort(v.begin(), v.end(), judge); //对对象指针进行排序
+        sort(v.begin(), v.end(), judge_fun); //对对象指针进行排序
         ListNode *H = v[0];
         ListNode *cur = H;
         for (int i = 0; i < v.size() - 1; i++)
@@ -563,8 +587,8 @@ void ThreadTravel(TreeNode *root)
     //     return(false);
     // }
     <1>
-        //递归查找：
-        BTNode *SearchTree(BiTree T, int key)
+//递归查找：
+BTNode *SearchTree(BiTree T, int key)
 {
     if (!T)
         return (NULL);
@@ -928,6 +952,37 @@ void find_path(vector<TreeNode *> &path, TreeNode *&t, TreeNode *target, int &fl
             path.pop_back();
     }
 }
+//例题:找出根节点到叶子节点的路径和=target 的路径
+class Solution
+{
+public:
+    vector< vector<int> >v;
+    vector<int>temp;
+    void InOrder(TreeNode *root, int sum)
+    {
+        if (root)
+        {
+            temp.push_back(root->val);
+            InOrder(root->left, sum);
+            if (root->left == NULL && root->right == NULL)
+            {
+                int s=0;//注意这里的初始化
+                for (int i = 0; i < temp.size(); i++)
+                    s += temp[i];
+                if (s == sum)
+                    v.push_back(temp);
+            }
+            InOrder(root->right, sum);
+            temp.pop_back();
+        }
+    }
+    vector<vector<int>> pathSum(TreeNode *root, int sum)
+    {
+        InOrder(root, sum);
+        return (v);
+    }
+};
+
 
 //8.交换所有的左右子树 后序遍历
 void Swap_Tree(TreeNode *&t)
@@ -988,6 +1043,49 @@ public:
         return (sum);
     }
 };
+//10.求二叉树的最深节点的和-运用中序遍历
+    int height(TreeNode* root)
+    {
+        if(root)
+        {
+            return(max(height(root->right),height(root->left))+1);
+        }
+        else 
+        {
+            return(0);
+        }
+    }
+    void  InOrder(TreeNode* root,int &sum ,int &h,int H)//中序遍历
+    {
+        if(root)
+        {
+            h++;
+            InOrder(root->left,sum,h,H);
+            if(h==H)//到了最后一层
+            {
+                sum+=root->val;
+            }
+            InOrder(root->right,sum,h,H);
+            h--;
+        }
+    }
+    int deepestLeavesSum(TreeNode* root) 
+    {
+        if(root)
+        {
+            int H=height(root);
+            int sum=0;
+            int h=0;
+            InOrder(root,sum,h,H);
+            return(sum);
+        }
+        else 
+        {
+            return(0);
+        }   
+    }
+
+
 /*******************************************************************************************************************************************************/
 
 3. 图
@@ -1188,10 +1286,16 @@ void find_path(vector<TreeNode *> &path, TreeNode *&t, TreeNode *target, int &fl
     }
 }
 //变式:通过定点的回路
-
+                      
 /********************************************************************************************************************************************************************/
 4.排序
-    //<1>插入排序   T=n^2
+//不稳定算法的记忆
+// 考研复习好痛苦啊 情绪不稳定啊 快些选一堆好友来聊天吧  
+// 快： 快速排序
+// 些：shell排序
+// 选：简单选择排序
+// 堆：堆排序
+//<1>插入排序   T=n^2
 void InsertSort(vector<int> &v)
 {
     for (int cur = 1; cur < v.size(); cur++)
@@ -1230,43 +1334,39 @@ void ShellSort(vector<int> &v) //T=n^2
 //t=n^2
 void BubbleSort(vector<int> &v)
 {
-    for (int i = 0; i < v.size() - 1; i++)
+    for (int i = 0; i < v.size(); i++) //次数
     {
-        for (int j = 0; j < v.size() - i - 1; j++) //注意这里
+        for (int j = 0; j < v.size() - i - 1; j++)
+        {
             if (v[j] > v[j + 1])
-                swap(v, j, j + 1);
+                swap(v[j], v[j + 1]);
+        }
     }
 }
-
 //<4>快速排序法  分治策略 时间 T=nlogn      空间：栈深 logn
-
-int Partition(vector<int> &v, int low1, int high1)
+int partition(vector<int> &v, int L, int H)
 {
-    int low = low1;
-    int high = high1;
+    int low = L;
+    int high = H;
     int key = v[low];
     while (low < high)
     {
-        while (low < high && v[high] >= key) //1.注意快拍就在这里有等号
+        while (low < high && v[high] >= key)
             high--;
         while (low < high && v[low] <= key)
             low++;
-        int temp = v[low];
-        v[low] = v[high];
-        v[high] = temp;
+        swap(v[low], v[high]);
     }
-    int temp = v[low]; //low1的值本来就不变
-    v[low] = key;
-    v[low1] = temp;
+    swap(v[L], v[low]);
     return (low);
 }
-void QuickSort(vector<int> &v, int low, int high)
+void QSort(vector<int> &v, int low, int high)
 {
     if (low < high)
-    {
-        int loc = Partition(v, low, high); //partition就会返回第一个元素的位置 用其分割
-        QuickSort(v, low, loc - 1);
-        QuickSort(v, loc + 1, high);
+    { //注意这里别忘记
+        int mid = partition(v, low, high);
+        QSort(v, low, mid);
+        QSort(v, mid + 1, high);
     }
 }
 
@@ -1282,44 +1382,37 @@ void MergeSort(vector<int> &v, int low, int high)
     }
 }
 
-//<6>堆排序    建立堆的算法是从第一个非叶子节点开始调整向上
-void Print(vector<int> v)
+//<6>堆排序  1.建堆-从第一个非叶子节点开始调整向上 2.将最大的放到后面
+void adjust(int low,int high,vector<int>&v)//调整low为根部的树
 {
-    for (int k = 0; k < v.size(); k++)
-        cout << v[k] << " ";
-}
-//调整以low为根的堆树 从上到下  调整Vlow
-void adjust(vector<int> &v, int low, int high)
-{
-    int i = low;
-    int child = 2 * i + 1; //存放最大的值
-    int temp = v[low];     //将调整的数存起来
-    while (child <= high)
+    int father=low;
+    int child=2*low+1;
+    while(child<high)
     {
-        if (child < high && v[child] < v[child + 1])
-            child++; //选出最大的孩子节点
-        if (v[child] > temp)
+        if( child+1<high  &&  v[child]<v[child+1] )//指向最大的
+            child++;
+        if(v[child]>v[father])
         {
-            v[i] = v[child];
-            i = child;
-            child = 2 * i + 1;
+            swap(v[child],v[father]);
+            father=child;
+            child=father*2+1;
         }
-        else
-            break;
+        else break;
     }
-    v[i] = temp; //放到应该的 位置上去
 }
-void HeapSort(vector<int> &v) //堆排序
+void HeapSort(vector<int>&v)//先建堆
 {
-    for (int i = v.size() / 2 - 1; i >= 0; i--) //从第一个非终端节点n/2-1开始调整  建立一个大顶堆  '
-        adjust(v, i, v.size() - 1);
-    //将最大的值和最后的一个值交换  实现排序将最大值放到后面
-    for (int i = v.size() - 1; i > 0; i--)
+    int n=v.size();
+    for(int i=n/2-1;i>=0;i--)//从第一个非叶子节点开始
+        adjust(i,v.size()-1,v);
+    for(int i=v.size()-1;i>=0;i--)//每次都将最大的跳出来
     {
-        swap(v[0], v[i]);
-        adjust(v, 0, i - 1);
+        swap(v[0],v[i]);//把最大的值放在后面
+        adjust(0,i-1,v);
     }
+    print(v);
 }
+
 //<7>堆的操作
 //插入
 //堆的基本操作
@@ -1375,7 +1468,8 @@ void InsertHeap(vector<int> &v, int x)
     }
 }
 //删除
-void delete (vector<int> &v, int x){
+void delete (vector<int> &v, int x)
+{
 
 }
 
@@ -1765,15 +1859,9 @@ void InorderRecursion(TreeNode *&t)
 
     /*********************************************************/
     //字符串全排列
-    void swap(int &a, int &b)
-    { //交换a,b值
-        int temp = a;
-        a = b;
-        b = temp;
-    }
-    void full_permutation(vector<char> a, int m)
+    void full_permutation(vector<char> a, int index)
     {
-        if (m == a.size() - 1)
+        if (index == a.size() - 1)
         {
             for (int i = 1; i <= a.size(); i++)
             {
@@ -1783,17 +1871,17 @@ void InorderRecursion(TreeNode *&t)
         }
         else
         {
-            for (int i = m; i < a.size(); i++)
+            for (int i = index; i < a.size(); i++)
             {
-                swap(a[i], a[m]);           //对应图一abc的第一次访问
-                full_permutation(a, m + 1); //对应图一step2,step4
-                swap(a[i], a[m]);           //对应图一abc的第二次访问
+                swap(a[i], a[index]);           //对应图一abc的第一次访问
+                full_permutation(a, index + 1); //对应图一step2,step4
+                swap(a[i], a[index]);           //对应图一abc的第二次访问
             }
         }
     }
 /**********************************************************************************************/
 //动态规划
-//<1>求连续子数组的最大和
+//<1>求连续子数组的最大和(正负)
 dp[i]= max(dp[i]+arr[ i ] , arr[ i ]) 
 int main()
 {
@@ -1872,3 +1960,10 @@ int main()
         cout << a.substr(end - max + 1, max) << endl;
     }
 }
+
+
+//笔试技巧
+//1.四舍五入保留小数点后两位
+控制流输出
+#include<iomanip>
+cout<<fixed<<setprecision(2)<<a<<endl;//注意笔试的时候要加endl
